@@ -1,9 +1,8 @@
-import json
+import os
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from typing import List
 from fastapi.responses import HTMLResponse
-import os
 
 app = FastAPI()
 
@@ -22,14 +21,20 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active_connections.append(websocket)
+        print(f"New connection: {websocket.client}")
     
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)
+        print(f"Disconnected: {websocket.client}")
     
     async def broadcast(self, message: str, sender: WebSocket):
         for connection in self.active_connections:
             if connection != sender:
-                await connection.send_text(message)
+                try:
+                    await connection.send_text(message)
+                except Exception as e:
+                    print(f"Error sending message: {e}")
+                    self.disconnect(connection)
 
 manager = ConnectionManager()
 
@@ -40,7 +45,9 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
+            print(f"Received message: {data} from {websocket.client}")
             # Broadcast received signaling messages to the other peer
             await manager.broadcast(data, websocket)
     except WebSocketDisconnect:
         manager.disconnect(websocket)
+        print(f"Client disconnected: {websocket.client}")

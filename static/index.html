@@ -7,10 +7,35 @@
 </head>
 <body>
     <h1>WebRTC Video Call</h1>
-    <video id="localVideo" autoplay playsinline></video>
-    <video id="remoteVideo" autoplay playsinline></video>
-    <button id="startCall">Start Call</button>
     
+    <!-- Video Elements -->
+    <div>
+        <h3>Local Video</h3>
+        <video id="localVideo" autoplay playsinline></video>
+    </div>
+    <div>
+        <h3>Remote Video</h3>
+        <video id="remoteVideo" autoplay playsinline></video>
+    </div>
+
+    <!-- Buttons -->
+    <div>
+        <button id="openMedia">Open Camera</button>
+        <button id="startCall" disabled>Start Call</button>
+        <button id="joinCall" disabled>Join Call</button>
+        <button id="hangUp" disabled>Hang Up</button>
+    </div>
+
+    <!-- Room Info -->
+    <div>
+        <p id="currentRoom"></p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <!-- Main Script -->
     <script src="/static/script.js"></script>
 </body>
 </html>
