@@ -4,38 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebRTC Video Call</title>
-</head>
-<body>
-    <h1>WebRTC Video Call</h1>
-    
-    <!-- Video Elements -->
-    <div>
-        <h3>Local Video</h3>
-        <video id="localVideo" autoplay playsinline></video>
-    </div>
-    <div>
-        <h3>Remote Video</h3>
-        <video id="remoteVideo" autoplay playsinline></video>
-    </div>
-
-    <!-- Buttons -->
-    <div>
-        <button id="openMedia">Open Camera</button>
-        <button id="startCall" disabled>Start Call</button>
-        <button id="joinCall" disabled>Join Call</button>
-        <button id="hangUp" disabled>Hang Up</button>
-    </div>
-
-    <!-- Room Info -->
-    <div>
-        <p id="currentRoom"></p>
-    </div>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
-    <!-- Main Script -->
+    <style>
+        /* Video container styles */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+
+        /* Local video (background) */
+        #localVideo {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Remote video (overlay) */
+        #remoteVideo {
+            width: 150px;
+            height: 100px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            border: 2px solid white;
+            border-radius: 8px;
+            background-color: black;
+        }
+
+        /* Button container */
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Room info */
+        #currentRoom {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>WebRTC Video Call</h1>
+    <video id="localVideo" autoplay playsinline></video>
+    <video id="remoteVideo" autoplay playsinline></video>
+    <button id="startCall">Start Call</button>
+    
     <script src="/static/script.js"></script>
 </body>
 </html>
