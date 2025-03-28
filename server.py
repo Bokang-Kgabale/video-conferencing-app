@@ -15,11 +15,14 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
     try:
-        # Serve the index.html file from the static directory
         with open(os.path.join(static_dir, "index.html")) as f:
             return HTMLResponse(content=f.read())
     except FileNotFoundError:
         return HTMLResponse(content="<h1>Index file not found</h1>", status_code=404)
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return HTMLResponse(content="", status_code=204)
 
 class ConnectionManager:
     def __init__(self):
@@ -49,6 +52,7 @@ manager = ConnectionManager()
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
+    print("WebSocket connection established.")
     try:
         while True:
             data = await websocket.receive_text()
@@ -57,3 +61,5 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         print(f"Client disconnected: {websocket.client}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
