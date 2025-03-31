@@ -63,3 +63,7 @@ async def websocket_endpoint(websocket: WebSocket):
         print(f"Client disconnected: {websocket.client}")
     except Exception as e:
         print(f"Unexpected error: {e}")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

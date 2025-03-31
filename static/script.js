@@ -18,7 +18,8 @@ const localVideo = document.getElementById("localVideo");
 const remoteVideo = document.getElementById("remoteVideo");
 
 let localStream;
-let remoteStream;
+let remoteStream = new MediaStream();
+remoteVideo.srcObject = remoteStream;
 let peerConnection;
 let roomId;
 
@@ -56,8 +57,6 @@ async function startVideoCall() {
 
         // Initialize PeerConnection
         peerConnection = new RTCPeerConnection(iceServers);
-        remoteStream = new MediaStream();
-        remoteVideo.srcObject = remoteStream;
 
         // Add local tracks to PeerConnection
         localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
@@ -133,8 +132,6 @@ async function joinRoom(roomId) {
 
         // Initialize PeerConnection
         peerConnection = new RTCPeerConnection(iceServers);
-        remoteStream = new MediaStream();
-        remoteVideo.srcObject = remoteStream;
 
         // Add local tracks to PeerConnection
         localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
